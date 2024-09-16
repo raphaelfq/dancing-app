@@ -13,8 +13,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -24,10 +24,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.dancingwikiapp.ui.theme.DancingWikiAppTheme
 
 
 val LightColors = lightColorScheme(
@@ -39,6 +41,8 @@ val LightColors = lightColorScheme(
 fun CustomTheme(colors: ColorScheme, content: @Composable () -> Unit) {
     MaterialTheme(colorScheme = colors, content = content)
 }
+
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,12 +71,35 @@ class MainActivity : ComponentActivity() {
                             modifier = Modifier.fillMaxWidth().weight(1f)
                         ) {
                             items(persons) { person ->
-                                Text(
-                                    text = "${person.firstName} ${person.lastName}",
+                                ElevatedCard(
                                     modifier = Modifier
                                         .fillMaxWidth()
-                                        .padding(vertical = 16.dp)
-                                )
+                                        .padding(8.dp)
+                                ) {
+                                    Column(
+                                        modifier = Modifier
+                                            .padding(8.dp)
+                                    ) {
+                                        Text(
+                                            text = "${person.name_official} Posição",
+                                            textAlign = TextAlign.Center,
+                                            fontWeight = FontWeight.Bold,
+                                            fontSize = 20.sp,
+                                            fontFamily = FontFamily.Serif,
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .padding(vertical = 8.dp)
+                                        )
+                                        Text(
+                                            text = "Ou.....: ${person.synonyms.joinToString(", ")}",
+                                            fontSize = 14.sp,
+                                            fontFamily = FontFamily.Serif,
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .padding(vertical = 8.dp)
+                                        )
+                                    }
+                                }
                             }
                         }
                     }

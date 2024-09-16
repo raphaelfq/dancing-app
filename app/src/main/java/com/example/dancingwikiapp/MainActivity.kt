@@ -54,7 +54,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val viewModel = viewModel<MainViewModel>()
+                    val viewModel = viewModel<PositionsSearchViewModel>()
                     val searchText by viewModel.searchText.collectAsState()
                     val persons by viewModel.persons.collectAsState()
                     val isSearching by viewModel.isSearching.collectAsState()

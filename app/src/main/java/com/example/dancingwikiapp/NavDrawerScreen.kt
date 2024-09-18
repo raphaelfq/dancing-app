@@ -1,5 +1,6 @@
 package com.example.dancingwikiapp
 
+import MovementCard
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
@@ -26,15 +27,17 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.bottombarexample.NavigationItem
 import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
-
-
 @Composable
 fun MainScreen() {
+    val navController = rememberNavController()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     var selectedItemIndex by rememberSaveable {
@@ -72,7 +75,12 @@ fun MainScreen() {
                             scope.launch {
                                 drawerState.close()
                             }
-                        },
+                        when (index){
+                            0 -> navController.navigate("positionSearch")
+                            1 -> navController.navigate("movementSearch")
+                            2 -> navController.navigate("aboutUs")
+                        }
+                                  },
                         icon = {
                             Icon(
                                 imageVector = if (index == selectedItemIndex) {
@@ -120,12 +128,29 @@ fun MainScreen() {
                 )
             }
         ) {
-
-
+            NavHost(navController = navController, startDestination = "main") {
+                composable("main") {
+                    // Your main screen content
+                    // ...
+                }
+                composable("movementSearch") {
+                    SearchMovementsScreen(navController)
+                }
+                composable("positionSearch") {
+                    SearchPositionsScreen(navController)
+                }
+                composable("aboutUs") {
+                    // Your "About Us" screen content
+                    // ...
+                }
+                composable("movement/{movementId}") { backStackEntry ->
+                    val movementId = backStackEntry.arguments?.getString("movementId")
+                    val movement = Movements.find { it.id == movementId?.toInt() }
+                    movement?.let {
+                        MovementCard(movement)
+                    }
+                }
+            }
         }
-
-
     }
-
-
 }

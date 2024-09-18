@@ -75,12 +75,28 @@ fun MovementCard(movement: Movement) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
+
+
+            // Imagem Oficial
+            Image(
+                painter = painterResource(id = R.drawable.imagim),
+                contentDescription = "Imagem do movimento",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(1f)
+                    .padding(bottom = 16.dp),
+                contentScale = ContentScale.Crop
+            )
+
+            // Sinônimos
+            Spacer(modifier = Modifier.height(8.dp))
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 14.dp),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Start
+                horizontalArrangement = Arrangement.Center
 
             ) {
                 Text(
@@ -117,20 +133,6 @@ fun MovementCard(movement: Movement) {
                     )
                 }
             }
-            Spacer(modifier = Modifier.height(8.dp))
-
-            // Imagem Oficial
-            Image(
-                painter = painterResource(id = R.drawable.imagim),
-                contentDescription = "Imagem do movimento",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .aspectRatio(1f)
-                    .padding(bottom = 16.dp),
-                contentScale = ContentScale.Crop
-            )
-
-            // Sinônimos
             Spacer(modifier = Modifier.height(8.dp))
             if (movement.synonyms.isNotEmpty()) {
                 Text(

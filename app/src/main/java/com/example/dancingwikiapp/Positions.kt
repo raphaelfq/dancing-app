@@ -3,6 +3,7 @@ package com.example.dancingwikiapp
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
@@ -10,55 +11,22 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.stateIn
 
-class PositionsSearchViewModel: ViewModel() {
-    private val _searchText = MutableStateFlow("")
-    val searchText = _searchText.asStateFlow()
-
-    private val _isSearching = MutableStateFlow(false)
-    val isSearching = _isSearching.asStateFlow()
-
-    private val _persons = MutableStateFlow(Positions)
-    val persons = searchText
-        .debounce(750L)
-        .combine(_persons){ text, persons ->
-            if(text.isBlank()){
-                persons
-            }
-            else{
-                persons.filter {
-                    it.doesMatchSearchQuery(text)
-                }
-            }
-        }
-        .stateIn(
-            viewModelScope,
-            SharingStarted.WhileSubscribed(5000),
-            _persons.value
-        )
-
-    fun onSearchTextChange(text: String){
-        _searchText.value = text
-    }
-
-}
-
 data class Position(
     val name_official: String,
     val synonyms: List<String>
-) {
-    fun doesMatchSearchQuery(query: String):Boolean {
-        val matchingCombinations = listOf(
-            name_official,
-            "${name_official.first()}") + synonyms
-        return matchingCombinations.any {
-            it.contains(query, ignoreCase = true)
-        }
+) : Searchable {
+
+    override fun doesMatchSearchQuery(query: String): Boolean {
+        val matchingCombinations = listOf(name_official, "${name_official.first()}") + synonyms
+        return matchingCombinations.any { it.contains(query, ignoreCase = true) }
     }
 }
 
 
+
+
 //Define some nomination rules for the Positions
-private val Positions = listOf(
+val Positions = listOf(
     Position(
         name_official = "Primeira",
         synonyms = listOf("Pés em V", "Pés juntinhos", "Pés de porta")

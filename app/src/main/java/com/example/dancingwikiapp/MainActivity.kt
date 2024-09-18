@@ -54,55 +54,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val viewModel = viewModel<PositionsSearchViewModel>()
-                    val searchText by viewModel.searchText.collectAsState()
-                    val persons by viewModel.persons.collectAsState()
-                    val isSearching by viewModel.isSearching.collectAsState()
-                    Column(
-                        modifier = Modifier.fillMaxSize().padding(16.dp)
-                    ) {
-                        TextField(
-                            value = searchText,
-                            onValueChange = viewModel::onSearchTextChange,
-                            modifier = Modifier.fillMaxWidth(),
-                            placeholder = { Text(text = "Search") })
-                        Spacer(modifier = Modifier.height(16.dp))
-                        LazyColumn(
-                            modifier = Modifier.fillMaxWidth().weight(1f)
-                        ) {
-                            items(persons) { person ->
-                                ElevatedCard(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(8.dp)
-                                ) {
-                                    Column(
-                                        modifier = Modifier
-                                            .padding(8.dp)
-                                    ) {
-                                        Text(
-                                            text = "${person.name_official} Posição",
-                                            textAlign = TextAlign.Center,
-                                            fontWeight = FontWeight.Bold,
-                                            fontSize = 20.sp,
-                                            fontFamily = FontFamily.Serif,
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .padding(vertical = 8.dp)
-                                        )
-                                        Text(
-                                            text = "Ou.....: ${person.synonyms.joinToString(", ")}",
-                                            fontSize = 14.sp,
-                                            fontFamily = FontFamily.Serif,
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .padding(vertical = 8.dp)
-                                        )
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    SearchPositionsScreen()
+
+
 
 
                 }

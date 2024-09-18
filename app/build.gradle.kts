@@ -70,5 +70,6 @@ dependencies {
     val lifecycle_version = "2.8.5"
 
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version")
+    implementation("com.google.android.exoplayer:exoplayer:2.19.1")
 
 }

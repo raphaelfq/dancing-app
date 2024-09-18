@@ -1,6 +1,7 @@
 package com.example.dancingwikiapp
 
 import MovementCard
+import PositionCard
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
@@ -128,7 +129,7 @@ fun MainScreen() {
                 )
             }
         ) {
-            NavHost(navController = navController, startDestination = "main") {
+            NavHost(navController = navController, startDestination = "movementSearch") {
                 composable("main") {
                     // Your main screen content
                     // ...
@@ -148,6 +149,15 @@ fun MainScreen() {
                     val movement = Movements.find { it.id == movementId?.toInt() }
                     movement?.let {
                         MovementCard(movement)
+                    }
+                }
+
+
+                composable("position/{positionsId}") { backStackEntry ->
+                    val positionId = backStackEntry.arguments?.getString("positionId")
+                    val position = Positions.find { it.id == positionId?.toInt() }
+                    position?.let {
+                        PositionCard(position)
                     }
                 }
             }

@@ -1,10 +1,12 @@
 import android.media.AudioAttributes
 import android.media.MediaPlayer
+import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -19,8 +21,38 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.viewinterop.AndroidView
+import androidx.media3.common.MediaItem
+import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.ui.PlayerView
 import com.example.dancingwikiapp.Movement
 import com.example.dancingwikiapp.R
+
+@androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
+@Composable
+fun SimpleVideoPlayer(videoUri: Uri) {
+    val context = LocalContext.current
+    val exoPlayer = remember {
+        ExoPlayer.Builder(context).build().apply {
+            val mediaItem = MediaItem.fromUri(videoUri)
+            setMediaItem(mediaItem)
+            prepare()
+        }
+    }
+
+    DisposableEffect(
+        AndroidView(
+            factory = {
+                PlayerView(context).apply {
+                    player = exoPlayer
+                }
+            },
+            modifier = Modifier.fillMaxWidth().height(250.dp)
+        )
+    ) {
+        onDispose { exoPlayer.release() }
+    }
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -28,6 +60,7 @@ fun MovementCard(movement: Movement) {
     var showDetailedDescription by remember { mutableStateOf(false) }
     var showMedia by remember { mutableStateOf(false) }
     var showKidsExplanation by remember { mutableStateOf(false) }
+
 
     Card(
         modifier = Modifier
@@ -230,16 +263,10 @@ fun MovementCard(movement: Movement) {
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         // Implemente a exibição de mídias aqui (vídeos, imagens, etc.)
-                        Spacer(modifier = Modifier.height(16.dp))
-                        Image(
-                            painter = painterResource(id = R.drawable.aguarde_em_breve),
-                            contentDescription = "Imagem do movimento",
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .aspectRatio(1f)
-                                .padding(bottom = 16.dp),
-                            contentScale = ContentScale.Crop
-                        )
+                        val context = LocalContext.current
+                        val packageName =context.packageName
+                        val videoUri = Uri.parse("android.resource://$$packageName/${R.raw.video_plie}") // Replace with your video URI
+                        SimpleVideoPlayer(videoUri)
                         Spacer(modifier = Modifier.height(4.dp))
                         Image(
                             painter = painterResource(id = R.drawable.aguarde_em_breve),

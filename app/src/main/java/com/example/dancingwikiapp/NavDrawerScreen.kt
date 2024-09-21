@@ -153,7 +153,7 @@ fun MainScreen() {
                 }
 
 
-                composable("position/{positionsId}") { backStackEntry ->
+                composable("position/{positionId}") { backStackEntry ->
                     val positionId = backStackEntry.arguments?.getString("positionId")
                     val position = Positions.find { it.id == positionId?.toInt() }
                     position?.let {

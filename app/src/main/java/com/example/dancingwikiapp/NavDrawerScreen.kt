@@ -129,7 +129,7 @@ fun MainScreen() {
                 )
             }
         ) {
-            NavHost(navController = navController, startDestination = "movementSearch") {
+            NavHost(navController = navController, startDestination = "aboutUs") {
                 composable("main") {
                     // Your main screen content
                     // ...
@@ -141,7 +141,7 @@ fun MainScreen() {
                     SearchPositionsScreen(navController)
                 }
                 composable("aboutUs") {
-                    // Your "About Us" screen content
+                    AboutUsScreen()
                     // ...
                 }
                 composable("movement/{movementId}") { backStackEntry ->

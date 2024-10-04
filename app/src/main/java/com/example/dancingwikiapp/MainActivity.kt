@@ -13,6 +13,7 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import com.example.dancingwikiapp.newuimovement.HomeScreen
 
 
 val LightColors = lightColorScheme(
@@ -37,7 +38,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MainScreen()
+                    HomeScreen()
 
 
 

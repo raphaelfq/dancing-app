@@ -267,7 +267,7 @@ fun MovementCard(movement: Movement) {
                         // Implemente a exibição de mídias aqui (vídeos, imagens, etc.)
                         val context = LocalContext.current
                         val packageName =context.packageName
-                        val videoUri = Uri.parse("android.resource://$$packageName/${R.raw.video_plie}") // Replace with your video URI
+                        val videoUri = Uri.parse("android.resource://$$packageName/${R.raw.pirouette_video}") // Replace with your video URI
                         SimpleVideoPlayer(videoUri)
                         Spacer(modifier = Modifier.height(4.dp))
                         Image(

@@ -34,7 +34,7 @@ fun AboutUsScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFF1F5F9))
+            .background(Color(0xFFFAF3E3))
             .padding(16.dp)
             .verticalScroll(scrollState)
     ) {
@@ -91,7 +91,8 @@ fun AboutUsScreen() {
             imageUrl = "https://media.licdn.com/dms/image/v2/D4D03AQGUNkKT4gpZzw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1667377634904?e=1733356800&v=beta&t=35yT8hTvPYx64g27wgg-5r9VaPTcwK29PJlxJ3GzWaA",
             name = "Raphael",
             description = "Desenvolvedor e Gerente",
-            details = "Aluno de Engenharia da Computação na Unicamp e AI Software Developer @ Samsung Research Brazil."
+            details = "Aluno de Engenharia da Computação na Unicamp e AI Software Developer @ Samsung Research Brazil.",
+
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -100,7 +101,7 @@ fun AboutUsScreen() {
             imageUrl = "https://media.licdn.com/dms/image/v2/D4E03AQHkrCrOiEdknw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1704734279985?e=1733356800&v=beta&t=rg1pexrndESua9tH5PRWPnngqvKVdUx_mrarKxLe6Hg",
             name = "Pietra",
             description = "Especialista em Dança",
-            details = "Porca, Artista, Neurocientista e Professora de Dança, responsável pela pesquisa [O papel da neuromotricidade na aprendizagem de Balé Clássico por crianças de 7 a 10 anos] "
+            details = "Artista e Professora de Dança, responsável pela pesquisa [O papel da neuromotricidade na aprendizagem de Balé Clássico por crianças de 7 a 10 anos] "
         )
 
         Spacer(modifier = Modifier.height(16.dp))

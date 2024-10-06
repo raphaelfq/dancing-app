@@ -148,7 +148,7 @@ fun MainScreen() {
                     val movementId = backStackEntry.arguments?.getString("movementId")
                     val movement = Movements.find { it.id == movementId?.toInt() }
                     movement?.let {
-                        MovementCard(movement)
+                        AboutDanceScreen(movement)
                     }
                 }
 

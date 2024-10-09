@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "413618131760",
+    "project_id": "dancedatabase-eb7fe",
+    "storage_bucket": "dancedatabase-eb7fe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:413618131760:android:f5a132ddbab4671752eef5",
+        "android_client_info": {
+          "package_name": "com.example.dancingwikiapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCifVF52q7ZA-36wNn7FMldXEMusGsxxYM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.example.dancingwikiapp.newuimovement.HomeScreen
+import com.google.firebase.FirebaseApp
 
 
 val LightColors = lightColorScheme(
@@ -38,7 +39,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MainScreen()
+                    FirebaseApp.initializeApp(this)
+
+                    UploadMovementScreen()
 
 
 

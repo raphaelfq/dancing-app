@@ -6,6 +6,7 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.MailOutline
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.DrawerValue
@@ -60,7 +61,13 @@ fun MainScreen() {
             title = "Sobre Nós",
             selectedIcon = Icons.Filled.Info,
             unselectedIcon = Icons.Outlined.Info
+        ),
+        NavigationItem(
+            title = "Upload",
+            selectedIcon = Icons.Filled.MailOutline,
+            unselectedIcon = Icons.Outlined.Info
         )
+
     )
     ModalNavigationDrawer(
         drawerContent = {
@@ -80,6 +87,7 @@ fun MainScreen() {
                             0 -> navController.navigate("positionSearch")
                             1 -> navController.navigate("movementSearch")
                             2 -> navController.navigate("aboutUs")
+                            3 -> navController.navigate("uploadMovement")
                         }
                                   },
                         icon = {
@@ -143,6 +151,9 @@ fun MainScreen() {
                 composable("aboutUs") {
                     AboutUsScreen()
                     // ...
+                }
+                composable("uploadMovement") {
+                    UploadMovementScreen()
                 }
                 composable("movement/{movementId}") { backStackEntry ->
                     val movementId = backStackEntry.arguments?.getString("movementId")

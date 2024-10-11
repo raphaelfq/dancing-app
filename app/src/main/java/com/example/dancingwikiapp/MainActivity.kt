@@ -41,7 +41,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     FirebaseApp.initializeApp(this)
 
-                    UploadMovementScreen()
+                    MainScreen()
 
 
 

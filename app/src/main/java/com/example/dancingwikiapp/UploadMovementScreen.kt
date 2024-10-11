@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+
 @Composable
 fun UploadMovementScreen() {
     var name by remember { mutableStateOf("") }
@@ -36,24 +37,17 @@ fun UploadMovementScreen() {
             .fillMaxSize()
             .padding(16.dp)
     ) {
+        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(32.dp))
         Text(
-            text = "Contribuia com nossa database!",
+            text = "Contribua com nossa database!",
             style = MaterialTheme.typography.headlineLarge,
             modifier = Modifier.padding(bottom = 16.dp)
         )
         Text(
             text = "Este é um espaço para você contribuir com nossa database colaborativa de Ballet fazendo o upload de um movimento que você acha interessante." +
-                    "Determine o nome do movimento, forneça uma breve descrição (opcional), escolha uma imagem de referência e faça sua contribuição!! ",
-            style = MaterialTheme.typography.bodyMedium,
-            modifier = Modifier.padding(bottom = 16.dp)
-        )
-        Text(
-            text = "ATENÇÃO!!! ",
-            style = MaterialTheme.typography.headlineMedium,
-            modifier = Modifier.padding(bottom = 16.dp)
-        )
-        Text(
-            text = "Sua contribuição passará pelo crivo de nossas espeacialistas em dança que se responsabilizarão pela curadoria do conteúdo da database ",
+                    "Determine o nome do movimento, forneça uma breve descrição (opcional), escolha uma imagem de referência e faça sua contribuição!",
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier.padding(bottom = 16.dp)
         )
@@ -69,7 +63,7 @@ fun UploadMovementScreen() {
         TextField(
             value = description,
             onValueChange = { description = it },
-            label = { Text("Descrição breve (opcional") },
+            label = { Text("Descrição breve (opcional)") },
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -77,7 +71,7 @@ fun UploadMovementScreen() {
 
         // Button to pick an image
         Button(onClick = { imagePickerLauncher.launch("image/*") }) {
-            Text("Escolha uma imagem:")
+            Text("Escolha uma imagem (opcional)")
         }
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -100,9 +94,10 @@ fun UploadMovementScreen() {
             onClick = {
                 isUploading = true // Set uploading state to true
 
-                // First, upload the image to Firebase Storage
-                imageUri?.let { uri ->
-                    uploadImageToFirebaseStorage(uri, name,
+                // Check if an image was selected
+                if (imageUri != null) {
+                    // If image is selected, upload it to Firebase Storage
+                    uploadImageToFirebaseStorage(imageUri!!, name,
                         onSuccess = { url ->
                             imageUrl = url
                             // After image is uploaded, upload the movement to Firestore
@@ -130,13 +125,42 @@ fun UploadMovementScreen() {
                                 },
                                 onFailure = { e ->
                                     isUploading = false
-                                    uploadResult = "Error uploading movement: ${e.message}"
+                                    uploadResult = "Erro ao enviar o movimento: ${e.message}"
                                 }
                             )
                         },
                         onFailure = { e ->
                             isUploading = false
-                            uploadResult = "Error uploading image: ${e.message}"
+                            uploadResult = "Erro ao enviar a imagem: ${e.message}"
+                        }
+                    )
+                } else {
+                    // If no image is selected, just upload the movement without an image URL
+                    val movement = Movimento(
+                        id = 1,
+                        name_official = name,
+                        synonyms = emptyList(),
+                        description = description,
+                        grade = 1,
+                        complexity = 1,
+                        typo = "",
+                        translation = "",
+                        detailed_description = "",
+                        related = emptyList(),
+                        methodical_description = "",
+                        child_explanation = "",
+                        imageUrl = null, // No image URL
+                        videoUrl = null
+                    )
+
+                    uploadMovement(movement,
+                        onSuccess = {
+                            isUploading = false
+                            uploadResult = "Movimento enviado com sucesso!"
+                        },
+                        onFailure = { e ->
+                            isUploading = false
+                            uploadResult = "Erro ao enviar o movimento: ${e.message}"
                         }
                     )
                 }
@@ -144,7 +168,7 @@ fun UploadMovementScreen() {
             enabled = !isUploading, // Disable button while uploading
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text(text = if (isUploading) "Uploading..." else "Faça o upload da imagem!")
+            Text(text = if (isUploading) "Enviando..." else "Enviar movimento")
         }
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -156,20 +180,6 @@ fun UploadMovementScreen() {
     }
 }
 
-//fun uploadMovement(movement: Movimento, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
-//    // Assuming addMovementToFirestore is defined properly
-//    addMovementToFirestore(
-//        movement,
-//        onSuccess = {
-//            // Reset UI on success
-//            onSuccess()
-//        },
-//        onFailure = { e ->
-//            // Reset UI on failure
-//            onFailure(e)
-//        }
-//    )
-//}
 fun uploadMovement(movement: Movimento, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
     val db = FirebaseFirestore.getInstance()
 
@@ -182,6 +192,7 @@ fun uploadMovement(movement: Movimento, onSuccess: () -> Unit, onFailure: (Excep
             onFailure(e)
         }
 }
+
 fun uploadImageToFirebaseStorage(
     imageUri: Uri,
     fileName: String,
@@ -200,7 +211,6 @@ fun uploadImageToFirebaseStorage(
             onFailure(exception) // Handle any errors
         }
 }
-
 
 @Preview(showBackground = true)
 @Composable

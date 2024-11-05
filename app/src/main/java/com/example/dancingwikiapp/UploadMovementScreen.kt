@@ -5,6 +5,8 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -23,6 +25,7 @@ fun UploadMovementScreen() {
     var isUploading by remember { mutableStateOf(false) }
     var uploadResult by remember { mutableStateOf<String?>(null) }
     var imageUrl by remember { mutableStateOf<String?>(null) }
+    val scrollState = rememberScrollState()
 
     // Image picker launcher
     val imagePickerLauncher = rememberLauncherForActivityResult(
@@ -36,6 +39,7 @@ fun UploadMovementScreen() {
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
+            .verticalScroll(scrollState)
     ) {
         Spacer(modifier = Modifier.height(16.dp))
         Spacer(modifier = Modifier.height(32.dp))
@@ -46,7 +50,7 @@ fun UploadMovementScreen() {
             modifier = Modifier.padding(bottom = 16.dp)
         )
         Text(
-            text = "Este é um espaço para você contribuir com nossa database colaborativa de Ballet fazendo o upload de um movimento que você acha interessante." +
+            text = "Este é um espaço para você contribuir com nossa database colaborativa de Balé fazendo o upload de um movimento que você acha interessante." +
                     "Determine o nome do movimento, forneça uma breve descrição (opcional), escolha uma imagem de referência e faça sua contribuição!",
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier.padding(bottom = 16.dp)
